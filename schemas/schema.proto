@@ -1,0 +1,571 @@
+syntax = "proto2";
+
+message COMMON_ERROR_REPLY {
+  required int32 result = 1;
+  required string error = 2;
+  optional uint32 opcode = 3;
+}
+
+message CLIENT_IDLE_TIMEOUT {}
+
+message DEVICE_MAPID_PUSH_HAS_WAITING_BE_SAVED {
+    required int32 result = 1;
+}
+
+message CLIENT_HEARTBEAT_REQ {}
+
+message CLIENT_HEARTBEAT_RSP {}
+
+message CLIENT_ONLINE_REQ {
+  required string deviceSerialNumber = 1;
+  required bool unk1 = 2;
+  required uint32 unk2 = 3;
+}
+
+message CLIENT_ONLINE_RSP {
+  required int32 result = 1;
+  optional string reason = 2;
+}
+
+message DEVICE_REGISTER_REQ {
+  required string softwareVersion = 1;
+  required string hardwareVersion = 2;
+  required string deviceSerialNumber = 3;
+  required string deviceMac = 4;
+  required uint32 deviceType = 5;
+  required uint32 customerFirmwareId = 6;
+  required string ctrlVersion = 7;
+}
+
+message DEVICE_REGISTER_RSP {
+  message Device {
+    required uint32 id = 1;
+  }
+
+  required int32 result = 1;
+  required Device device = 3;
+}
+
+message DEVICE_VERSION_INFO_UPDATE_REQ {
+  required string softwareVersion = 1;
+  required string hardwareVersion = 2;
+}
+
+message DEVICE_VERSION_INFO_UPDATE_RSP {
+  required int32 result = 1;
+}
+
+message PUSH_DEVICE_AGENT_SETTING_REQ {
+  required uint32 deviceId = 1;
+  required USER_SET_DEVICE_CTRL_SETTING_REQ voice = 2;
+  required USER_SET_DEVICE_CLEANPREFERENCE_REQ cleanPreference = 3;
+  optional DEVICE_ORDERLIST_SETTING_REQ taskList = 4;
+  required PUSH_DEVICE_PACKAGE_UPGRADE_INFO_REQ ota = 5;
+  required USER_SET_DEVICE_QUIETHOURS_REQ quietHours = 7;
+}
+
+message PUSH_DEVICE_AGENT_SETTING_RSP {
+  required int32 result = 1;
+}
+
+message PUSH_DEVICE_PACKAGE_UPGRADE_INFO_REQ {
+  required bool newVersion = 1;
+  required string packageSize = 2;
+  required string systemVersion = 3;
+  required string otaPackageVersion = 4;
+  required string remoteUrl = 5;
+  required bool forceupgrade = 6;
+}
+
+message PUSH_DEVICE_PACKAGE_UPGRADE_INFO_RSP {
+  required int32 result = 1;
+}
+
+message PUSH_DEVICE_BATTERY_INFO_REQ {
+  message Battery {
+    required uint32 level = 1;
+  }
+
+  required Battery battery = 1;
+}
+
+message PUSH_DEVICE_BATTERY_INFO_RSP {
+  required int32 result = 1;
+}
+
+message DEVICE_SEEK_LOCATION_REQ {}
+
+message DEVICE_SEEK_LOCATION_RSP {}
+
+message DEVICE_STATUS_GETTING_REQ {}
+
+message DEVICE_MAPID_WORK_STATUS_PUSH_REQ {
+  required uint32 mapHeadId = 1;
+  required bool areaCleanFlag = 2;
+  required uint32 workMode = 3;
+  required uint32 battery = 4;
+  required bool chargeStatus = 5;
+  required uint32 type = 6;
+  required uint32 faultCode = 7;
+  required uint32 cleanPreference = 8;
+  required bool repeatClean = 9;
+  required uint32 cleanTime = 10;
+  required uint32 cleanSize = 11;
+  optional uint32 waterLevel = 12;
+  optional uint32 dustBoxType = 13;
+  optional bool mopType = 14;
+}
+
+message DEVICE_SET_CLEAN_PREFERENCE_REQ {
+  required uint32 mode = 1;
+}
+
+message DEVICE_SET_CLEAN_PREFERENCE_RSP {
+  required int32 result = 1;
+}
+
+message DEVICE_AUTO_CLEAN_REQ {
+  required uint32 ctrlValue = 1;
+  required uint32 cleanType = 2;
+}
+
+message DEVICE_AUTO_CLEAN_RSP {}
+
+message DEVICE_CHARGE_REQ {
+  required uint32 enable = 1;
+}
+
+message DEVICE_CHARGE_RSP {
+  required int32 result = 1;
+}
+
+message DEVICE_MAPID_GET_GLOBAL_INFO_REQ {
+  required uint32 mask = 1;
+}
+
+message DEVICE_MAPID_SET_NAVIGATION_REQ {
+  required uint32 mapHeadId = 1;
+  required float poseX = 2;
+  required float poseY = 3;
+  required float posePhi = 4;
+  required uint32 ctrlValue = 5;
+}
+
+message DEVICE_MAPID_SET_NAVIGATION_RSP {
+  required int32 result = 1;
+  required DEVICE_MAPID_SET_NAVIGATION_REQ position = 3;
+}
+
+message DEVICE_WORKSTATUS_REPORT_REQ {
+  required uint32 status = 1;
+}
+
+message DEVICE_WORKSTATUS_REPORT_RSP {
+  required int32 result = 1;
+}
+
+message DEVICE_GET_ALL_GLOBAL_MAP_INFO_REQ {
+    required uint32 unk1 = 1;
+    required string unk2 = 2;
+}
+
+message DEVICE_GET_ALL_GLOBAL_MAP_INFO_RSP {
+    required int32 result = 1;
+}
+
+message DEVICE_GETTIME_REQ {}
+
+message DEVICE_GETTIME_RSP {
+    message Body {
+        required uint32 deviceTime = 1;
+        optional uint32 deviceTimezone = 2;
+    }
+
+    required int32 result = 1;
+    required Body body = 3;
+}
+
+message DEVICE_SETTIME_REQ {}
+
+message DEVICE_SETTIME_RSP {
+  required uint32 deviceTime = 1;
+  optional uint32 deviceTimezone = 2;
+}
+
+message DEVICE_CONTROL_LOCK_REQ {}
+
+message DEVICE_CONTROL_LOCK_RSP {
+    required int32 result = 1;
+}
+
+message DEVICE_MAPID_SET_AREA_CLEAN_INFO_REQ {
+  message Coordinate {
+    required float x = 1;
+    required float y = 2;
+  }
+
+  message CleanArea {
+    required uint32 cleanAreaId = 1;
+    required uint32 type = 2;
+    required uint32 coordinateLength = 3;
+    repeated Coordinate coordinateList = 4;
+  }
+
+  required uint32 mapHeadId = 1;
+  required uint32 planId = 2;
+  required uint32 cleanAreaLength = 3;
+  repeated CleanArea cleanAreaList = 4;
+}
+
+message DEVICE_MAPID_SET_AREA_RESTRICTED_INFO_REQ {
+  message Coordinate {
+    required float x = 1;
+    required float y = 2;
+  }
+
+  message CleanArea {
+    required uint32 cleanAreaId = 1;
+    required uint32 type = 2;
+    required uint32 coordinateLength = 3;
+    repeated Coordinate coordinateList = 4;
+  }
+
+  required uint32 mapHeadId = 1;
+  required uint32 planId = 2;
+  required uint32 cleanAreaLength = 3;
+  repeated CleanArea cleanAreaList = 4;
+}
+
+message DEVICE_MAPID_SET_AREA_RESTRICTED_INFO_RSP {
+  required int32 result = 1;
+  required DEVICE_MAPID_SET_AREA_RESTRICTED_INFO_REQ position = 3;
+}
+
+message DEVICE_MAPID_SET_AREA_CLEAN_INFO_RSP {
+  required int32 result = 1;
+  required DEVICE_MAPID_SET_AREA_CLEAN_INFO_REQ position = 3;
+}
+
+message DEVICE_AREA_CLEAN_REQ {
+  required uint32 ctrlValue = 1;
+}
+
+message DEVICE_AREA_CLEAN_RSP {
+  required int32 result = 1;
+}
+
+message DEVICE_MANUAL_CTRL_REQ {
+  required uint32 command = 1;
+}
+
+message DEVICE_MANUAL_CTRL_RSP {
+  required int32 result = 1;
+}
+
+message DEVICE_MAPID_SET_SAVEWAITINGMAP_INFO_REQ {
+  required uint32 mode = 1;
+}
+
+message DEVICE_MAPID_SET_SAVEWAITINGMAP_INFO_RSP {
+  required int32 result = 1;
+}
+
+message DEVICE_ORDERLIST_GETTING_REQ {}
+
+message DEVICE_ORDERLIST_GETTING_RSP {
+  message PlanInfo {
+    required uint32 planId = 1;
+    required string planName = 2;
+  }
+
+  message MapInfo {
+    required uint32 mapId = 1;
+    required string mapName = 2;
+    repeated PlanInfo planInfo = 3;
+  }
+
+  required int32 result = 1;
+  repeated DEVICE_ORDERLIST_SETTING_REQ orderList = 3;
+  repeated MapInfo mapInfoList = 4;
+}
+
+message DEVICE_ORDERLIST_SETTING_REQ {
+  message CleanInfo {
+    required uint32 mapHeadId = 1;
+    required uint32 planId = 2;
+    required uint32 cleanMode = 3;
+    required uint32 windPower = 4;
+    required uint32 waterLevel = 5;
+    required bool twiceClean = 6;
+  }
+
+  required uint32 orderId = 1;
+  required bool enable = 2;
+  required bool repeat = 3;
+  required uint32 weekDay = 4;
+  required uint32 dayTime = 5;
+  optional CleanInfo cleanInfo = 6;
+}
+
+message DEVICE_ORDERLIST_SETTING_RSP {
+  required uint32 orderId = 1;
+  required int32 result = 2;
+}
+
+message DEVICE_ORDERLIST_DELETE_REQ {
+  required uint32 orderId = 1;
+  required uint32 mode = 2;
+}
+
+message DEVICE_ORDERLIST_DELETE_RSP {
+  required uint32 orderId = 1;
+  required int32 result = 2;
+}
+
+message DEVICE_MAPID_GET_CONSUMABLES_PARAM_REQ {}
+
+message DEVICE_MAPID_GET_CONSUMABLES_PARAM_RSP {
+  required uint32 mainBrushTime = 1;
+  required uint32 sideBrushTime = 2;
+  required uint32 filterTime = 3;
+  required uint32 dishclothTime = 4;
+}
+
+message DEVICE_EVENT_REPORT_CLEANTASK {
+  message Unk1 {
+    required uint32 unk1Unk1 = 1;
+    required uint32 unk1Unk2 = 2;
+    optional uint32 unk1Unk6 = 6;
+  }
+
+  required uint32 cleanId = 1;
+  required uint32 startTime = 2;
+  required uint32 endTime = 3;
+  required uint32 unk4 = 4;
+  required uint32 unk5 = 5;
+  required uint32 unk6 = 6;
+  required uint32 unk7 = 7;
+  required Unk1 unk8 = 8;
+  optional uint32 mapHeadId = 9;
+  optional string mapName = 10;
+  optional string planName = 11;
+}
+
+message DEVICE_CLEANMAP_BINDATA_REPORT_REQ {
+  required uint32 cleanId = 1;
+}
+
+message DEVICE_CLEANMAP_BINDATA_REPORT_RSP {
+  required int32 result = 1;
+  required uint32 cleanId = 3;
+}
+
+message DEVICE_OFFLINE_CMD {
+  required int32 result = 1;
+}
+
+message DEVICE_TIME_SYNC_RSP {
+  message Body {
+    required uint32 time = 1;
+  }
+  required int32 result = 1;
+  required Body body = 3;
+}
+
+message DEVICE_EVENT_REPORT_REQ {
+  required int32 type = 1;
+  required int32 keyValue = 2;
+  optional int32 reportTime = 3;
+}
+
+message DEVICE_EVENT_REPORT_CLEANMAP {
+  required uint32 cleanId = 1;
+}
+
+message DEVICE_EVENT_REPORT_RSP {
+  message Body {
+    required uint32 cleanId = 1;
+  }
+  required int32 result = 1;
+  required Body body = 3;
+}
+
+message UNK_11A4 {
+  required uint32 unk1 = 1;
+}
+
+message UNK_11A7 {
+  required uint32 unk1 = 1;
+}
+
+message UNK_0044 {}
+
+message DEVICE_WITHROOMS_CLEAN_REQ {
+  required uint32 cleanType = 1;
+  required uint32 ctrlValue = 2;
+  required uint32 roomNumber = 3;
+  required bytes roomIdList = 4;
+}
+
+message DEVICE_WITHROOMS_CLEAN_RSP {
+  required int32 result = 1;
+}
+
+message DEVICE_WLAN_INFO_GETTING_REQ {}
+
+message DEVICE_WLAN_INFO_GETTING_RSP {
+  message Body {
+    required string ipv4 = 1;
+    required string ssid = 2;
+    required uint32 port = 3;
+    required string mask = 4;
+    required string mac = 5;
+  }
+
+  required int32 result = 1;
+  required Body body = 3;
+}
+
+message DEVICE_MAPID_SELECT_MAP_PLAN_REQ {
+  required uint32 mapHeadId = 1;
+  optional uint32 planId = 2;
+  required uint32 mode = 3;
+}
+
+message DEVICE_MAPID_SELECT_MAP_PLAN_RSP {
+  required int32 result = 1;
+  required uint32 unk1 = 3;
+}
+
+message DEVICE_MAPID_SET_PLAN_PARAMS_REQ {
+  message Room {
+    required uint32 roomId = 1;
+    required string roomName = 3;
+    required bool enable = 4;
+  }
+
+  required uint32 mapHeadId = 1;
+  required uint32 planId = 2;
+  required string mapName = 3;
+  required string planName = 4;
+  repeated Room roomList = 5;
+  required DEVICE_MAPID_SET_AREA_CLEAN_INFO_REQ areaInfo = 6;
+}
+
+message DEVICE_MAPID_SET_PLAN_PARAMS_RSP {
+  required int32 result = 1;
+  required uint32 unk1 = 3;
+}
+
+message DEVICE_MAPID_SET_ARRANGEROOM_INFO_REQ {
+  required uint32 mapHeadId = 1;
+  required uint32 type = 2;
+  required uint32 dataLen = 3;
+  required bytes data = 4;
+  required uint32 roomId = 5;
+}
+
+message DEVICE_MAPID_SET_ARRANGEROOM_INFO_RSP {
+  required int32 result = 1;
+}
+
+message DEVICE_VIRWALL_ALL_LIST_SETTING_RSP {
+  required int32 result = 1;
+  required string unk1 = 2;
+  required int32 unk2 = 3;
+}
+
+message USER_SET_DEVICE_QUIETHOURS_REQ {
+  required bool isOpen = 1;
+  required uint32 beginTime = 2;
+  required uint32 endTime = 3;
+}
+
+message USER_SET_DEVICE_QUIETHOURS_RSP {
+  required int32 result = 1;
+}
+
+message USER_SET_DEVICE_CLEANPREFERENCE_REQ {
+  optional bool ecoMode = 1;
+  optional bool repeatClean = 2;
+  optional bool cleanBroken = 3;
+  optional bool carpetTurbo = 4;
+  optional bool historyMap = 5;
+  optional uint32 waterLevel = 6;
+}
+
+message USER_SET_DEVICE_CLEANPREFERENCE_RSP {
+  required int32 result = 1;
+}
+
+message DEVICE_ZERO_CALIBRATION_REQ {
+  required uint32 unk1 = 1;
+}
+
+message DEVICE_ZERO_CALIBRATION_RSP {
+  message Body {
+    required uint32 unk1 = 1;
+  }
+
+  required int32 result = 1;
+  required Body body = 3;
+}
+
+message DEVICE_UPGRADE_GET_AUTO_INSTALL_REQ {}
+
+message DEVICE_UPGRADE_GET_AUTO_INSTALL_RSP {
+  required int32 result = 1;
+}
+
+message DEVICE_UPGRADE_SET_AUTO_INSTALL_REQ {
+  required uint32 unk1 = 1;
+}
+
+message DEVICE_UPGRADE_SET_AUTO_INSTALL_RSP {
+  required int32 result = 1;
+}
+
+message USER_SET_DEVICE_CTRL_SETTING_REQ {
+  optional bool voiceMode = 1;
+  optional uint32 volume = 2;
+}
+
+message USER_SET_DEVICE_CTRL_SETTING_RSP {
+  required int32 result = 1;
+}
+
+message DEVICE_MAPID_SET_CONSUMABLES_PARAM_REQ {
+  required uint32 itemId = 1;
+}
+
+message DEVICE_MAPID_SET_CONSUMABLES_PARAM_RSP {
+  required int32 result = 1;
+}
+
+message USER_GET_DEVICE_QUIETHOURS_REQ {}
+
+message USER_GET_DEVICE_QUIETHOURS_RSP {
+  required bool isOpen = 1;
+  required uint32 beginTime = 2;
+  required uint32 endTime = 3;
+}
+
+message DEVICE_MAPID_SET_HISTORY_MAP_ENABLE_REQ {}
+
+message DEVICE_MAPID_SET_HISTORY_MAP_ENABLE_RSP {}
+
+message DEVICE_MAPID_INTO_MODEIDLE_INFO_REQ {
+  required uint32 mode = 1;
+}
+
+message DEVICE_MAPID_INTO_MODEIDLE_INFO_RSP {
+  required int32 result = 1;
+}
+
+message DEVICE_MOP_FLOOR_CLEAN_REQ {
+  required uint32 ctrlValue = 1;
+}
+
+message DEVICE_MOP_FLOOR_CLEAN_RSP {
+  required int32 result = 1;
+}

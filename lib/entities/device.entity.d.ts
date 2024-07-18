@@ -6,6 +6,7 @@ import { DeviceCurrentClean } from '../value-objects/device-current-clean.value-
 import { DeviceError } from '../value-objects/device-error.value-object';
 import { DeviceFanSpeed } from '../value-objects/device-fan-speed.value-object';
 import { DeviceMode } from '../value-objects/device-mode.value-object';
+import { DeviceOperationMode } from '../value-objects/device-operation-mode.value-object';
 import { DeviceState } from '../value-objects/device-state.value-object';
 import { DeviceSystem } from '../value-objects/device-system.value-object';
 import { DeviceVersion } from '../value-objects/device-version.value-object';
@@ -29,6 +30,7 @@ export interface DeviceProps {
     mode?: DeviceMode;
     error?: DeviceError;
     fanSpeed?: DeviceFanSpeed;
+    operationMode?: DeviceOperationMode;
     waterLevel?: DeviceWaterLevel;
     hasMopAttached?: boolean;
     hasWaitingMap?: boolean;
@@ -48,6 +50,7 @@ export declare class Device extends Entity<DeviceProps> {
     get mode(): DeviceMode | undefined;
     get error(): DeviceError | undefined;
     get fanSpeed(): DeviceFanSpeed | undefined;
+    get operationMode(): DeviceOperationMode | undefined;
     get waterLevel(): DeviceWaterLevel | undefined;
     get hasMopAttached(): boolean | undefined;
     get hasWaitingMap(): boolean | undefined;
@@ -62,6 +65,7 @@ export declare class Device extends Entity<DeviceProps> {
     updateBattery(battery: DeviceBattery): void;
     updateState(state: DeviceState): void;
     updateMode(mode: DeviceMode): void;
+    updateOperationMode(operationMode: DeviceOperationMode): void;
     updateError(error: DeviceError): void;
     updateFanSpeed(fanSpeed: DeviceFanSpeed): void;
     updateWaterLevel(waterLevel: DeviceWaterLevel): void;
